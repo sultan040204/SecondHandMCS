@@ -8,6 +8,7 @@ import com.auth.auth.test.jwtGeneratorTest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,9 @@ public class GetToken {
     @PostMapping()
     public ResponseEntity<LoginResponseDto> loginUser(@Valid @RequestBody SignInDto LoginResponse,HttpServletRequest request){
         String jwt = signInService.loginEmail(LoginResponse);
-        service.getUsername(request.getHeader("Authorization"));
+        String tokenHeader = request.getHeader("Authorization");
+        String tokken = service.getUsername(tokenHeader);
+        System.out.println(tokken);
         if(jwt == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -36,5 +39,13 @@ public class GetToken {
             response.setJwt(jwt);
             return ResponseEntity.ok(response);
         }
+    }
+    @GetMapping()
+    public String getToken(HttpServletRequest request){
+        String tokenHeader = request.getHeader("Authorization");
+        System.out.println(tokenHeader);
+        String tokken = service.getUsername(tokenHeader);
+        System.out.println(tokken);
+        return "String";
     }
 }

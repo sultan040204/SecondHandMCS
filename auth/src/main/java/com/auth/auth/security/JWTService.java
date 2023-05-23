@@ -11,7 +11,6 @@ import java.util.Date;
 
 @Service
 public class JWTService{
-
     @Value("${jwt.algorithm.key}")
     private String algorithmKey;
     @Value("${jwt.issuer}")
@@ -33,6 +32,6 @@ public class JWTService{
                 .sign(algorithm);
     }
     public String getUsername(String token){
-        return JWT.decode(token).getClaim(USERNAME_KEY).asString();
+        return JWT.decode(token).getClaim(algorithmKey).asString();
     }
 }

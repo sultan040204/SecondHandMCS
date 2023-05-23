@@ -16,16 +16,13 @@ import org.springframework.stereotype.Service;
 public class SignUpService {
     private final UserRepository userRepository;
     private final EncryptionService encryptionService;
-    private final JWTService jwtService;
     private RabbitTemplate template;
     @Autowired
-    public SignUpService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService, RabbitTemplate template) {
+    public SignUpService(UserRepository userRepository, EncryptionService encryptionService, RabbitTemplate template) {
         this.userRepository = userRepository;
         this.encryptionService = encryptionService;
-        this.jwtService = jwtService;
         this.template = template;
     }
-
     public User register(SignUpDto registerBody) throws UserAlreadyExistsException {
         if(userRepository.findByEmailIgnoreCase(registerBody.getEmail()).isPresent()){
             throw new UserAlreadyExistsException();
@@ -43,7 +40,7 @@ public class SignUpService {
         userInfoRabbitMqDto.setFirstname(save.getFirstname());
         userInfoRabbitMqDto.setLastname(save.getLastname());
         userInfoRabbitMqDto.setPhoneNumber(save.getPhoneNumber());
-
+        System.out.println(userInfoRabbitMqDto);
         template.convertAndSend(RabbitMqConfig.EXCHANGE,
                 RabbitMqConfig.ROUTING_KEY, userInfoRabbitMqDto);
 

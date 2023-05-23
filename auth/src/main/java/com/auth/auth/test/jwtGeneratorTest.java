@@ -3,6 +3,7 @@ package com.auth.auth.test;
 import com.auth.auth.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,14 @@ public class jwtGeneratorTest {
                 .sign(algorithm);
     }
     public String getUsername(String token){
-        return JWT.decode(token).getClaim(USERNAME_KEY).asString();
+        try {
+          if(Jwts.parser().setSigningKey(USERNAME_KEY).parseClaimsJws(token).getBody().getSubject()==null){
+              return "Null epta";
+          }
+            System.out.println("Nulllllelele");
+            return "Jwts.parser().setSigningKey(USERNAME_KEY).parseClaimsJws(token).getBody().getSubject()";
+        }catch (Exception e){
+            return "Bzbz";
+        }
     }
 }

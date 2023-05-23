@@ -1,6 +1,7 @@
 package com.auth.auth.security;
 
 import com.auth.auth.config.RabbitMqConfig;
+import com.auth.auth.dto.UserInfoRabbitMqDto;
 import com.auth.auth.entity.User;
 import com.auth.auth.repositories.UserRepository;
 import com.auth0.jwt.exceptions.JWTDecodeException;
@@ -21,11 +22,11 @@ public class JwtRabbitFilter {
         this.userRepository = userRepository;
     }
 
-    @RabbitListener(queues = RabbitMqConfig.QUEUE)
-    public void setMessage(String token){
-            FilterRabbit(token);
-        System.out.println("Rabbit listener  "+token);
-    }
+//    @RabbitListener(queues = RabbitMqConfig.QUEUE)
+//    public void setMessage(UserInfoRabbitMqDto userInfoRabbitMqDto){
+////            FilterRabbit(token);
+//        System.out.println("Rabbit listener  "+userInfoRabbitMqDto.getFirstname());
+//    }
 
     public void FilterRabbit(String token){
         System.out.println("FilterRabbit "+token);
@@ -34,10 +35,8 @@ public class JwtRabbitFilter {
             try {
                 String username = jwtService.getUsername(resultToken);
                 Optional<User> opUser = userRepository.findByEmailIgnoreCase(username);
-                System.out.println("user----- 1+"+ resultToken);
                 if (opUser.isPresent()) {
                     User user = opUser.get();
-                    System.out.println("user----- 2+"+ user);
                 }
             } catch (JWTDecodeException ex) {
             }
@@ -50,10 +49,8 @@ public class JwtRabbitFilter {
             try {
                 String username = jwtService.getUsername(resultToken);
                 Optional<User> opUser = userRepository.findByEmailIgnoreCase(username);
-                System.out.println("user----- 1+"+ resultToken);
                 if (opUser.isPresent()) {
                     User user = opUser.get();
-                    System.out.println("user----- 2+"+ user);
                 }
             } catch (JWTDecodeException ex) {
             }

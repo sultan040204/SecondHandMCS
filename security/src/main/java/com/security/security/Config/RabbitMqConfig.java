@@ -1,10 +1,10 @@
-package com.auth.auth.config;
+package com.security.security.Config;
 
 import com.rabbitmq.client.ConnectionFactory;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -42,6 +42,5 @@ public class RabbitMqConfig {
         return template;
 
     }
-
 
 }

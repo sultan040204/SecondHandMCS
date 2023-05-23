@@ -1,10 +1,10 @@
-package com.auth.auth.config;
+package com.example.emailService.config;
 
 import com.rabbitmq.client.ConnectionFactory;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMqConfig {
-    public static final String QUEUE = "user_information_queue";
-    public static final String EXCHANGE = "user_information_exchange";
-    public static final String ROUTING_KEY = "user_information_routingKey";
+public class RabbitMqEmailQueue {
+    public static final String QUEUE = "send_email_queue";
+    public static final String EXCHANGE = "send_email_exchange";
+    public static final String ROUTING_KEY = "send_email_routingKey";
 
     @Bean
     public Queue queue(){
